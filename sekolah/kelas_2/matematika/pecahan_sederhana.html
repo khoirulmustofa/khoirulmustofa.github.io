@@ -1,0 +1,1336 @@
+<!doctype html>
+<html lang="id" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pecahan Sederhana - Kelas 2 SD</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="/_sdk/element_sdk.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;family=Comic+Neue:wght@400;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "Nunito", "Comic Neue", sans-serif;
+      }
+
+      .gradient-bg {
+        background: linear-gradient(
+          135deg,
+          #ffecd2 0%,
+          #fcb69f 25%,
+          #ffeaa7 50%,
+          #dfe6e9 75%,
+          #a29bfe 100%
+        );
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes bounce-slow {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes wiggle {
+        0%,
+        100% {
+          transform: rotate(-3deg);
+        }
+        50% {
+          transform: rotate(3deg);
+        }
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(255, 183, 77, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(255, 183, 77, 0.8);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        33% {
+          transform: translateY(-5px) rotate(2deg);
+        }
+        66% {
+          transform: translateY(5px) rotate(-2deg);
+        }
+      }
+
+      .bounce-slow {
+        animation: bounce-slow 2s ease-in-out infinite;
+      }
+      .wiggle {
+        animation: wiggle 1s ease-in-out infinite;
+      }
+      .pulse-glow {
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .pizza-slice {
+        clip-path: polygon(50% 50%, 0% 0%, 100% 0%);
+      }
+
+      .btn-fun {
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-fun:hover {
+        transform: scale(1.05);
+      }
+      .btn-fun:active {
+        transform: scale(0.95);
+      }
+
+      .correct-animation {
+        animation: correctPop 0.5s ease;
+      }
+      @keyframes correctPop {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .wrong-animation {
+        animation: wrongShake 0.5s ease;
+      }
+      @keyframes wrongShake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px);
+        }
+        75% {
+          transform: translateX(10px);
+        }
+      }
+
+      .section-title {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .food-card {
+        background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        border: 3px solid transparent;
+        background-clip: padding-box;
+      }
+
+      .nav-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .star {
+        color: #ffd700;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      }
+    </style>
+    <style>
+      body {
+        box-sizing: border-box;
+      }
+    </style>
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  </head>
+  <body class="h-full">
+    <div id="app" class="h-full overflow-auto gradient-bg">
+      <!-- Navigation -->
+      <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 py-3">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-3xl wiggle">🍕</span>
+              <h1
+                id="nav-title"
+                class="text-lg md:text-xl font-black text-purple-600"
+              >
+                Pecahan Sederhana
+              </h1>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <button
+                onclick="scrollToSection('materi')"
+                class="btn-fun px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-pink-400 to-rose-400 text-white rounded-full text-sm font-bold shadow-lg"
+              >
+                📚 Materi
+              </button>
+              <button
+                onclick="scrollToSection('soal')"
+                class="btn-fun px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-blue-400 to-cyan-400 text-white rounded-full text-sm font-bold shadow-lg"
+              >
+                ✏️ Latihan
+              </button>
+              <button
+                onclick="scrollToSection('skor')"
+                class="btn-fun px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-amber-400 to-orange-400 text-white rounded-full text-sm font-bold shadow-lg"
+              >
+                🏆 Skor
+              </button>
+               <a
+            href="../../index.html"
+            class="nav-btn px-4 py-2 rounded-full bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold text-sm shadow-md"
+            data-section="quiz"
+          >
+            🏠 Beranda
+          </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- Hero Section -->
+      <section class="py-8 md:py-12 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="bounce-slow inline-block mb-4">
+            <span class="text-6xl md:text-8xl">🎂</span>
+          </div>
+          <h1
+            id="main-title"
+            class="text-4xl md:text-6xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400"
+          >
+            Pecahan Sederhana
+          </h1>
+          <p
+            id="subtitle"
+            class="text-xl md:text-2xl font-bold text-gray-700 mb-6"
+          >
+            Untuk Kelas 2 SD
+          </p>
+          <div class="flex justify-center gap-4 flex-wrap">
+            <div
+              class="float bg-white/80 backdrop-blur rounded-2xl px-6 py-3 shadow-xl"
+            >
+              <span class="text-3xl">🍕</span>
+              <p class="font-bold text-purple-600">Pizza</p>
+            </div>
+            <div
+              class="float bg-white/80 backdrop-blur rounded-2xl px-6 py-3 shadow-xl"
+              style="animation-delay: 0.5s"
+            >
+              <span class="text-3xl">🍰</span>
+              <p class="font-bold text-pink-500">Kue</p>
+            </div>
+            <div
+              class="float bg-white/80 backdrop-blur rounded-2xl px-6 py-3 shadow-xl"
+              style="animation-delay: 1s"
+            >
+              <span class="text-3xl">🍫</span>
+              <p class="font-bold text-amber-600">Cokelat</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Materi Section -->
+      <section id="materi" class="py-8 px-4">
+        <div class="max-w-6xl mx-auto">
+          <h2
+            class="text-3xl md:text-4xl font-black text-center mb-8 section-title"
+          >
+            📚 Ayo Belajar Pecahan!
+          </h2>
+          <!-- Penjelasan Umum -->
+          <div
+            class="bg-white/90 backdrop-blur rounded-3xl p-6 md:p-8 shadow-2xl mb-8 card-hover"
+          >
+            <div class="flex items-start gap-4 flex-wrap md:flex-nowrap">
+              <div class="text-6xl wiggle">🤔</div>
+              <div>
+                <h3 class="text-2xl font-black text-purple-600 mb-3">
+                  Apa itu Pecahan?
+                </h3>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                  <strong>Pecahan</strong> adalah bagian dari sesuatu yang utuh!
+                  Bayangkan kamu punya <strong>1 pizza</strong>, lalu dibagi
+                  sama rata untuk dimakan bersama teman. Setiap bagian pizza itu
+                  disebut <strong>pecahan</strong>! 🍕
+                </p>
+                <div
+                  class="mt-4 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl"
+                >
+                  <p class="font-bold text-orange-700">
+                    💡 Ingat ya! Pecahan ditulis seperti ini:
+                  </p>
+                  <div class="text-center mt-2">
+                    <span class="text-4xl font-black text-purple-600">1</span>
+                    <hr class="border-2 border-purple-600 w-12 mx-auto my-1" />
+                    <span class="text-4xl font-black text-purple-600">2</span>
+                  </div>
+                  <p class="text-center mt-2 text-gray-600">
+                    Angka atas = bagian yang diambil<br />
+                    Angka bawah = total bagian
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Pecahan 1/2 -->
+          <div
+            class="bg-white/90 backdrop-blur rounded-3xl p-6 md:p-8 shadow-2xl mb-6 card-hover border-l-8 border-pink-400"
+          >
+            <h3
+              class="text-2xl md:text-3xl font-black text-pink-500 mb-4 flex items-center gap-3"
+            >
+              <span class="text-4xl">½</span> Setengah (Satu per Dua)
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <p class="text-lg text-gray-700 mb-4">
+                  <strong>½</strong> artinya
+                  <strong>1 bagian dari 2 bagian</strong> yang sama besar.
+                </p>
+                <div class="space-y-3">
+                  <div
+                    class="flex items-center gap-3 bg-pink-50 p-3 rounded-xl"
+                  >
+                    <span class="text-3xl">🍕</span>
+                    <p>
+                      Pizza dipotong jadi <strong>2 bagian sama besar</strong>,
+                      kamu ambil <strong>1 potong</strong> = ½
+                    </p>
+                  </div>
+                  <div
+                    class="flex items-center gap-3 bg-pink-50 p-3 rounded-xl"
+                  >
+                    <span class="text-3xl">🍎</span>
+                    <p>
+                      Apel dibelah jadi <strong>2</strong>, kamu makan
+                      <strong>1 belahan</strong> = ½
+                    </p>
+                  </div>
+                  <div
+                    class="flex items-center gap-3 bg-pink-50 p-3 rounded-xl"
+                  >
+                    <span class="text-3xl">🍫</span>
+                    <p>
+                      Cokelat batangan dipotong <strong>2</strong>, adikmu dapat
+                      <strong>1 potong</strong> = ½
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-center">
+                <div class="relative w-48 h-48">
+                  <!-- Pizza utuh dibagi 2 -->
+                  <svg
+                    viewbox="0 0 100 100"
+                    class="w-full h-full drop-shadow-xl"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="#fbbf24"
+                      stroke="#92400e"
+                      stroke-width="3"
+                    />
+                    <circle cx="50" cy="50" r="40" fill="#fcd34d" />
+                    <!-- Topping -->
+                    <circle cx="35" cy="35" r="5" fill="#dc2626" />
+                    <circle cx="65" cy="35" r="5" fill="#dc2626" />
+                    <circle cx="35" cy="65" r="5" fill="#dc2626" />
+                    <circle cx="65" cy="65" r="5" fill="#dc2626" />
+                    <circle cx="50" cy="50" r="4" fill="#dc2626" />
+                    <!-- Garis pembagi -->
+                    <line
+                      x1="50"
+                      y1="5"
+                      x2="50"
+                      y2="95"
+                      stroke="#92400e"
+                      stroke-width="3"
+                      stroke-dasharray="5,3"
+                    />
+                    <!-- Bagian yang diarsir -->
+                    <path
+                      d="M50,50 L50,5 A45,45 0 0,0 50,95 Z"
+                      fill="rgba(236, 72, 153, 0.4)"
+                    />
+                  </svg>
+                </div>
+                <p class="mt-3 text-xl font-black text-pink-500">
+                  ½ Pizza = 1 dari 2 bagian
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Pecahan 1/3 -->
+          <div
+            class="bg-white/90 backdrop-blur rounded-3xl p-6 md:p-8 shadow-2xl mb-6 card-hover border-l-8 border-green-400"
+          >
+            <h3
+              class="text-2xl md:text-3xl font-black text-green-600 mb-4 flex items-center gap-3"
+            >
+              <span class="text-4xl">⅓</span> Sepertiga (Satu per Tiga)
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <p class="text-lg text-gray-700 mb-4">
+                  <strong>⅓</strong> artinya
+                  <strong>1 bagian dari 3 bagian</strong> yang sama besar.
+                </p>
+                <div class="space-y-3">
+                  <div
+                    class="flex items-center gap-3 bg-green-50 p-3 rounded-xl"
+                  >
+                    <span class="text-3xl">🎂</span>
+                    <p>
+                      Kue dipotong jadi <strong>3 bagian sama besar</strong>,
+                      kamu ambil <strong>1 potong</strong> = ⅓
+                    </p>
+                  </div>
+                  <div
+                    class="flex items-center gap-3 bg-green-50 p-3 rounded-xl"
+                  >
+                    <span class="text-3xl">🥪</span>
+                    <p>
+                      Sandwich dibagi <strong>3</strong>, temanmu dapat
+                      <strong>1 bagian</strong> = ⅓
+                    </p>
+                  </div>
+                  <div
+                    class="flex items-center gap-3 bg-green-50 p-3 rounded-xl"
+                  >
+                    <span class="text-3xl">🍉</span>
+                    <p>
+                      Semangka dipotong <strong>3</strong>, ibu makan
+                      <strong>1 potong</strong> = ⅓
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-center">
+                <div class="relative w-48 h-48">
+                  <!-- Kue dibagi 3 -->
+                  <svg
+                    viewbox="0 0 100 100"
+                    class="w-full h-full drop-shadow-xl"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      fill="#f472b6"
+                      stroke="#be185d"
+                      stroke-width="3"
+                    />
+                    <circle cx="50" cy="50" r="40" fill="#fbcfe8" />
+                    <!-- Dekorasi kue -->
+                    <circle cx="50" cy="25" r="6" fill="#fbbf24" />
+                    <circle cx="30" cy="60" r="6" fill="#fbbf24" />
+                    <circle cx="70" cy="60" r="6" fill="#fbbf24" />
+                    <!-- Garis pembagi 3 -->
+                    <line
+                      x1="50"
+                      y1="50"
+                      x2="50"
+                      y2="5"
+                      stroke="#be185d"
+                      stroke-width="2"
+                      stroke-dasharray="4,2"
+                    />
+                    <line
+                      x1="50"
+                      y1="50"
+                      x2="11"
+                      y2="72"
+                      stroke="#be185d"
+                      stroke-width="2"
+                      stroke-dasharray="4,2"
+                    />
+                    <line
+                      x1="50"
+                      y1="50"
+                      x2="89"
+                      y2="72"
+                      stroke="#be185d"
+                      stroke-width="2"
+                      stroke-dasharray="4,2"
+                    />
+                    <!-- Bagian yang diarsir -->
+                    <path
+                      d="M50,50 L50,5 A45,45 0 0,1 89,72 Z"
+                      fill="rgba(34, 197, 94, 0.4)"
+                    />
+                  </svg>
+                </div>
+                <p class="mt-3 text-xl font-black text-green-600">
+                  ⅓ Kue = 1 dari 3 bagian
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Pecahan 1/4 -->
+          <div
+            class="bg-white/90 backdrop-blur rounded-3xl p-6 md:p-8 shadow-2xl mb-6 card-hover border-l-8 border-blue-400"
+          >
+            <h3
+              class="text-2xl md:text-3xl font-black text-blue-600 mb-4 flex items-center gap-3"
+            >
+              <span class="text-4xl">¼</span> Seperempat (Satu per Empat)
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <p class="text-lg text-gray-700 mb-4">
+                  <strong>¼</strong> artinya
+                  <strong>1 bagian dari 4 bagian</strong> yang sama besar.
+                </p>
+                <div class="space-y-3">
+                  <div
+                    class="flex items-center gap-3 bg-blue-50 p-3 rounded-xl"
+                  >
+                    <span class="text-3xl">🍰</span>
+                    <p>
+                      Tart dipotong jadi <strong>4 bagian sama besar</strong>,
+                      kamu ambil <strong>1 potong</strong> = ¼
+                    </p>
+                  </div>
+                  <div
+                    class="flex items-center gap-3 bg-blue-50 p-3 rounded-xl"
+                  >
+                    <span class="text-3xl">🍊</span>
+                    <p>
+                      Jeruk dibagi <strong>4</strong>, ayah makan
+                      <strong>1 bagian</strong> = ¼
+                    </p>
+                  </div>
+                  <div
+                    class="flex items-center gap-3 bg-blue-50 p-3 rounded-xl"
+                  >
+                    <span class="text-3xl">🧇</span>
+                    <p>
+                      Wafel dipotong <strong>4</strong>, kakak dapat
+                      <strong>1 kotak</strong> = ¼
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col items-center justify-center">
+                <div class="relative w-48 h-48">
+                  <!-- Cokelat batangan dibagi 4 -->
+                  <svg
+                    viewbox="0 0 100 80"
+                    class="w-full h-full drop-shadow-xl"
+                  >
+                    <rect
+                      x="5"
+                      y="10"
+                      width="90"
+                      height="60"
+                      rx="5"
+                      fill="#92400e"
+                      stroke="#78350f"
+                      stroke-width="3"
+                    />
+                    <rect
+                      x="10"
+                      y="15"
+                      width="80"
+                      height="50"
+                      rx="3"
+                      fill="#b45309"
+                    />
+                    <!-- Garis pembagi -->
+                    <line
+                      x1="32.5"
+                      y1="10"
+                      x2="32.5"
+                      y2="70"
+                      stroke="#78350f"
+                      stroke-width="2"
+                      stroke-dasharray="4,2"
+                    />
+                    <line
+                      x1="55"
+                      y1="10"
+                      x2="55"
+                      y2="70"
+                      stroke="#78350f"
+                      stroke-width="2"
+                      stroke-dasharray="4,2"
+                    />
+                    <line
+                      x1="77.5"
+                      y1="10"
+                      x2="77.5"
+                      y2="70"
+                      stroke="#78350f"
+                      stroke-width="2"
+                      stroke-dasharray="4,2"
+                    />
+                    <!-- Bagian yang diarsir -->
+                    <rect
+                      x="10"
+                      y="15"
+                      width="20"
+                      height="50"
+                      fill="rgba(59, 130, 246, 0.4)"
+                    />
+                  </svg>
+                </div>
+                <p class="mt-3 text-xl font-black text-blue-600">
+                  ¼ Cokelat = 1 dari 4 bagian
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Perbandingan Pecahan -->
+          <div
+            class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-3xl p-6 md:p-8 shadow-2xl card-hover"
+          >
+            <h3
+              class="text-2xl md:text-3xl font-black text-purple-600 mb-6 text-center"
+            >
+              🔍 Perbandingan Pecahan
+            </h3>
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="bg-white rounded-2xl p-4 text-center shadow-lg">
+                <div class="text-5xl font-black text-pink-500 mb-2">½</div>
+                <div
+                  class="w-full h-8 bg-gray-200 rounded-full overflow-hidden"
+                >
+                  <div
+                    class="h-full bg-pink-400 rounded-full"
+                    style="width: 50%"
+                  ></div>
+                </div>
+                <p class="mt-2 font-bold text-gray-600">50% atau setengah</p>
+              </div>
+              <div class="bg-white rounded-2xl p-4 text-center shadow-lg">
+                <div class="text-5xl font-black text-green-500 mb-2">⅓</div>
+                <div
+                  class="w-full h-8 bg-gray-200 rounded-full overflow-hidden"
+                >
+                  <div
+                    class="h-full bg-green-400 rounded-full"
+                    style="width: 33.33%"
+                  ></div>
+                </div>
+                <p class="mt-2 font-bold text-gray-600">33% atau sepertiga</p>
+              </div>
+              <div class="bg-white rounded-2xl p-4 text-center shadow-lg">
+                <div class="text-5xl font-black text-blue-500 mb-2">¼</div>
+                <div
+                  class="w-full h-8 bg-gray-200 rounded-full overflow-hidden"
+                >
+                  <div
+                    class="h-full bg-blue-400 rounded-full"
+                    style="width: 25%"
+                  ></div>
+                </div>
+                <p class="mt-2 font-bold text-gray-600">25% atau seperempat</p>
+              </div>
+            </div>
+            <div class="mt-6 p-4 bg-white rounded-2xl">
+              <p class="text-center text-lg font-bold text-purple-700">
+                💡 Semakin besar angka di bawah, semakin kecil bagiannya!<br /><span
+                  class="text-pink-500"
+                  >½</span
+                >
+                &gt; <span class="text-green-500">⅓</span> &gt;
+                <span class="text-blue-500">¼</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Soal Section -->
+      <section id="soal" class="py-8 px-4">
+        <div class="max-w-6xl mx-auto">
+          <h2
+            class="text-3xl md:text-4xl font-black text-center mb-4 section-title"
+          >
+            ✏️ Latihan Soal HOTS
+          </h2>
+          <p class="text-center text-gray-600 mb-8 text-lg">
+            20 soal dari tingkat sedang hingga sulit. Ayo uji pemahamanmu! 💪
+          </p>
+          <!-- Progress Bar -->
+          <div class="bg-white/90 backdrop-blur rounded-2xl p-4 mb-6 shadow-xl">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-bold text-purple-600">Progres:</span>
+              <span id="progress-text" class="font-bold text-purple-600"
+                >0/20 soal</span
+              >
+            </div>
+            <div class="w-full h-4 bg-gray-200 rounded-full overflow-hidden">
+              <div
+                id="progress-bar"
+                class="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-500"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+          <!-- Questions Container -->
+          <div id="questions-container" class="space-y-6">
+            <!-- Questions will be generated by JavaScript -->
+          </div>
+        </div>
+      </section>
+      <!-- Skor Section -->
+      <section id="skor" class="py-8 px-4 pb-20">
+        <div class="max-w-4xl mx-auto">
+          <div
+            class="bg-white/90 backdrop-blur rounded-3xl p-6 md:p-8 shadow-2xl text-center"
+          >
+            <h2 class="text-3xl md:text-4xl font-black mb-6 section-title">
+              🏆 Papan Skor
+            </h2>
+            <div class="grid md:grid-cols-3 gap-4 mb-6">
+              <div
+                class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl p-4"
+              >
+                <p class="text-4xl mb-2">✅</p>
+                <p
+                  class="text-3xl font-black text-green-600"
+                  id="correct-count"
+                >
+                  0
+                </p>
+                <p class="font-bold text-gray-600">Benar</p>
+              </div>
+              <div
+                class="bg-gradient-to-br from-red-100 to-rose-100 rounded-2xl p-4"
+              >
+                <p class="text-4xl mb-2">❌</p>
+                <p class="text-3xl font-black text-red-500" id="wrong-count">
+                  0
+                </p>
+                <p class="font-bold text-gray-600">Salah</p>
+              </div>
+              <div
+                class="bg-gradient-to-br from-yellow-100 to-amber-100 rounded-2xl p-4"
+              >
+                <p class="text-4xl mb-2">⭐</p>
+                <p
+                  class="text-3xl font-black text-amber-600"
+                  id="score-display"
+                >
+                  0%
+                </p>
+                <p class="font-bold text-gray-600">Nilai</p>
+              </div>
+            </div>
+            <div
+              id="achievement"
+              class="hidden bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6 mb-6"
+            >
+              <p class="text-5xl mb-3" id="achievement-emoji">🌟</p>
+              <p
+                class="text-2xl font-black text-purple-600"
+                id="achievement-text"
+              >
+                Hebat!
+              </p>
+            </div>
+            <button
+              onclick="resetQuiz()"
+              class="btn-fun px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-lg font-bold shadow-xl"
+            >
+              🔄 Ulangi Latihan
+            </button>
+           
+          </div>
+        </div>
+      </section>
+    </div>
+    <script>
+      // Default configuration
+      const defaultConfig = {
+        main_title: "Pecahan Sederhana",
+        subtitle: "Untuk Kelas 2 SD",
+        background_color: "#ffecd2",
+        card_color: "#ffffff",
+        text_color: "#374151",
+        primary_action: "#8b5cf6",
+        secondary_action: "#ec4899",
+      };
+
+      // Questions data - 20 HOTS questions
+      const questions = [
+        // Level Sedang (1-7)
+        {
+          id: 1,
+          level: "sedang",
+          question:
+            "Ibu memotong pizza menjadi 2 bagian sama besar. Budi mengambil 1 potong. Berapa bagian pizza yang diambil Budi?",
+          visual: "pizza-half",
+          options: ["½", "⅓", "¼", "1"],
+          correct: 0,
+          emoji: "🍕",
+        },
+        {
+          id: 2,
+          level: "sedang",
+          question:
+            "Sebuah kue dibagi menjadi 3 bagian sama besar. Ani mendapat 1 bagian. Berapa pecahan kue yang didapat Ani?",
+          visual: "cake-third",
+          options: ["¼", "½", "⅓", "2/3"],
+          correct: 2,
+          emoji: "🎂",
+        },
+        {
+          id: 3,
+          level: "sedang",
+          question:
+            "Cokelat batangan dipotong menjadi 4 bagian sama besar. Dani mengambil 1 potong. Berapa pecahan cokelat yang diambil Dani?",
+          visual: "chocolate-quarter",
+          options: ["½", "⅓", "¼", "1/5"],
+          correct: 2,
+          emoji: "🍫",
+        },
+        {
+          id: 4,
+          level: "sedang",
+          question: "Gambar mana yang menunjukkan pecahan ½?",
+          visual: "visual-choice-half",
+          options: ["A", "B", "C", "D"],
+          correct: 0,
+          emoji: "🔍",
+        },
+        {
+          id: 5,
+          level: "sedang",
+          question:
+            "Semangka dibagi menjadi 2 bagian sama besar untuk Rina dan adiknya. Masing-masing mendapat berapa bagian?",
+          visual: "watermelon-half",
+          options: ["⅓", "½", "¼", "2"],
+          correct: 1,
+          emoji: "🍉",
+        },
+        {
+          id: 6,
+          level: "sedang",
+          question:
+            "Sebuah roti dibagi menjadi 4 bagian sama besar. Jika ayah makan 1 bagian, berapa pecahan roti yang dimakan ayah?",
+          visual: "bread-quarter",
+          options: ["½", "⅓", "¼", "2/4"],
+          correct: 2,
+          emoji: "🍞",
+        },
+        {
+          id: 7,
+          level: "sedang",
+          question:
+            "Jeruk dibagi menjadi 3 bagian sama besar untuk 3 orang teman. Masing-masing mendapat pecahan berapa?",
+          visual: "orange-third",
+          options: ["¼", "½", "⅓", "1"],
+          correct: 2,
+          emoji: "🍊",
+        },
+        // Level Sulit (8-20)
+        {
+          id: 8,
+          level: "sulit",
+          question: "Mana yang lebih besar: ½ pizza atau ¼ pizza?",
+          visual: "compare-half-quarter",
+          options: [
+            "½ pizza",
+            "¼ pizza",
+            "Sama besar",
+            "Tidak bisa dibandingkan",
+          ],
+          correct: 0,
+          emoji: "⚖️",
+        },
+        {
+          id: 9,
+          level: "sulit",
+          question:
+            "Siti punya 1 kue. Dia memberikan ½ kepada Rina. Berapa bagian kue yang tersisa untuk Siti?",
+          visual: "remaining-half",
+          options: ["0", "½", "¼", "⅓"],
+          correct: 1,
+          emoji: "🤔",
+        },
+        {
+          id: 10,
+          level: "sulit",
+          question: "Urutkan dari yang terbesar: ¼, ½, ⅓",
+          visual: "order-fractions",
+          options: ["¼, ⅓, ½", "½, ⅓, ¼", "⅓, ¼, ½", "½, ¼, ⅓"],
+          correct: 1,
+          emoji: "📊",
+        },
+        {
+          id: 11,
+          level: "sulit",
+          question:
+            "Jika pizza dipotong menjadi 4 bagian sama besar, lalu kamu mengambil 2 potong, berapa pecahannya?",
+          visual: "two-quarters",
+          options: ["¼", "½", "⅓", "2"],
+          correct: 1,
+          emoji: "🍕",
+        },
+        {
+          id: 12,
+          level: "sulit",
+          question:
+            "Andi memiliki ½ kue. Beni memiliki ⅓ kue. Siapa yang memiliki kue lebih banyak?",
+          visual: "compare-cakes",
+          options: ["Andi", "Beni", "Sama banyak", "Tidak tahu"],
+          correct: 0,
+          emoji: "🎂",
+        },
+        {
+          id: 13,
+          level: "sulit",
+          question:
+            "Sebuah tart dibagi menjadi 4 bagian sama besar. Jika 3 bagian sudah dimakan, berapa bagian yang tersisa?",
+          visual: "remaining-quarter",
+          options: ["¼", "½", "⅓", "3/4"],
+          correct: 0,
+          emoji: "🥧",
+        },
+        {
+          id: 14,
+          level: "sulit",
+          question:
+            "Ibu membuat 2 pizza sama besar. Masing-masing dipotong menjadi 2 bagian. Berapa total potongan pizza?",
+          visual: "multiple-pizzas",
+          options: ["2 potong", "3 potong", "4 potong", "8 potong"],
+          correct: 2,
+          emoji: "🍕🍕",
+        },
+        {
+          id: 15,
+          level: "sulit",
+          question:
+            "Pecahan mana yang menunjukkan bagian terkecil dari sebuah kue?",
+          visual: "smallest-fraction",
+          options: ["½", "⅓", "¼", "1"],
+          correct: 2,
+          emoji: "🔬",
+        },
+        {
+          id: 16,
+          level: "sulit",
+          question:
+            "Sebuah wafel berbentuk persegi dipotong menjadi 4 bagian sama besar. Jika kamu mengambil 1 bagian dari sudut, berbentuk apakah potonganmu?",
+          visual: "waffle-shape",
+          options: [
+            "Lingkaran",
+            "Segitiga",
+            "Persegi kecil",
+            "Persegi panjang",
+          ],
+          correct: 2,
+          emoji: "🧇",
+        },
+        {
+          id: 17,
+          level: "sulit",
+          question:
+            "Pak Guru membagi kertas menjadi 3 bagian sama besar. Masing-masing bagian adalah...",
+          visual: "paper-thirds",
+          options: ["½ kertas", "⅓ kertas", "¼ kertas", "1 kertas"],
+          correct: 1,
+          emoji: "📄",
+        },
+        {
+          id: 18,
+          level: "sulit",
+          question:
+            "Jika ½ apel sama dengan 2 potong, berapa potong dalam 1 apel utuh?",
+          visual: "apple-logic",
+          options: ["2 potong", "3 potong", "4 potong", "5 potong"],
+          correct: 2,
+          emoji: "🍎",
+        },
+        {
+          id: 19,
+          level: "sulit",
+          question:
+            "Rara memiliki ¼ cokelat. Dia ingin berbagi sama rata dengan adiknya. Masing-masing mendapat berapa?",
+          visual: "share-quarter",
+          options: ["¼", "½", "⅛", "Tidak bisa dibagi"],
+          correct: 2,
+          emoji: "🍫",
+        },
+        {
+          id: 20,
+          level: "sulit",
+          question:
+            "Ada 3 anak ingin berbagi 1 pizza sama rata. Setelah dibagi, sisa ⅓ pizza tidak dimakan. Berapa bagian yang dimakan?",
+          visual: "eaten-pizza",
+          options: ["⅓", "½", "⅔", "1"],
+          correct: 2,
+          emoji: "🍕",
+        },
+      ];
+
+      let answeredQuestions = new Set();
+      let correctAnswers = 0;
+      let wrongAnswers = 0;
+
+      // Generate visual for each question type
+      function generateVisual(visual, emoji) {
+        const visualMap = {
+          "pizza-half": `
+          <svg viewBox="0 0 100 100" class="w-32 h-32 mx-auto mb-4">
+            <circle cx="50" cy="50" r="45" fill="#fbbf24" stroke="#92400e" stroke-width="3"/>
+            <circle cx="50" cy="50" r="40" fill="#fcd34d"/>
+            <circle cx="35" cy="35" r="5" fill="#dc2626"/>
+            <circle cx="65" cy="35" r="5" fill="#dc2626"/>
+            <circle cx="35" cy="65" r="5" fill="#dc2626"/>
+            <circle cx="65" cy="65" r="5" fill="#dc2626"/>
+            <line x1="50" y1="5" x2="50" y2="95" stroke="#92400e" stroke-width="3"/>
+            <path d="M50,50 L50,5 A45,45 0 0,0 50,95 Z" fill="rgba(236, 72, 153, 0.5)"/>
+          </svg>`,
+          "cake-third": `
+          <svg viewBox="0 0 100 100" class="w-32 h-32 mx-auto mb-4">
+            <circle cx="50" cy="50" r="45" fill="#f472b6" stroke="#be185d" stroke-width="3"/>
+            <circle cx="50" cy="50" r="40" fill="#fbcfe8"/>
+            <circle cx="50" cy="25" r="6" fill="#fbbf24"/>
+            <circle cx="30" cy="60" r="6" fill="#fbbf24"/>
+            <circle cx="70" cy="60" r="6" fill="#fbbf24"/>
+            <line x1="50" y1="50" x2="50" y2="5" stroke="#be185d" stroke-width="2"/>
+            <line x1="50" y1="50" x2="11" y2="72" stroke="#be185d" stroke-width="2"/>
+            <line x1="50" y1="50" x2="89" y2="72" stroke="#be185d" stroke-width="2"/>
+            <path d="M50,50 L50,5 A45,45 0 0,1 89,72 Z" fill="rgba(34, 197, 94, 0.5)"/>
+          </svg>`,
+          "chocolate-quarter": `
+          <svg viewBox="0 0 100 80" class="w-36 h-28 mx-auto mb-4">
+            <rect x="5" y="10" width="90" height="60" rx="5" fill="#92400e" stroke="#78350f" stroke-width="3"/>
+            <rect x="10" y="15" width="80" height="50" rx="3" fill="#b45309"/>
+            <line x1="32.5" y1="10" x2="32.5" y2="70" stroke="#78350f" stroke-width="2"/>
+            <line x1="55" y1="10" x2="55" y2="70" stroke="#78350f" stroke-width="2"/>
+            <line x1="77.5" y1="10" x2="77.5" y2="70" stroke="#78350f" stroke-width="2"/>
+            <rect x="10" y="15" width="20" height="50" fill="rgba(59, 130, 246, 0.5)"/>
+          </svg>`,
+          default: `<div class="text-6xl text-center mb-4">${emoji}</div>`,
+        };
+        return visualMap[visual] || visualMap["default"];
+      }
+
+      // Render all questions
+      function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+
+        questions.forEach((q, index) => {
+          const levelColor =
+            q.level === "sedang"
+              ? "from-blue-400 to-cyan-400"
+              : "from-purple-500 to-pink-500";
+          const levelBorder =
+            q.level === "sedang" ? "border-blue-400" : "border-purple-500";
+          const levelText =
+            q.level === "sedang" ? "text-blue-600" : "text-purple-600";
+          const levelBg =
+            q.level === "sedang" ? "bg-blue-100" : "bg-purple-100";
+
+          const questionHTML = `
+          <div id="question-${q.id}" class="bg-white/95 backdrop-blur rounded-3xl p-6 shadow-2xl card-hover border-l-8 ${levelBorder}">
+            <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <span class="px-4 py-1 bg-gradient-to-r ${levelColor} text-white rounded-full text-sm font-bold">
+                Soal ${q.id}
+              </span>
+              <span class="px-3 py-1 ${levelBg} ${levelText} rounded-full text-sm font-bold">
+                ${q.level === "sedang" ? "⭐ Sedang" : "⭐⭐ Sulit"}
+              </span>
+            </div>
+            
+            <div class="mb-4">
+              ${generateVisual(q.visual, q.emoji)}
+            </div>
+            
+            <p class="text-lg font-bold text-gray-800 mb-4">${q.question}</p>
+            
+            <div class="grid grid-cols-2 gap-3" id="options-${q.id}">
+              ${q.options
+                .map(
+                  (opt, i) => `
+                <button onclick="checkAnswer(${q.id}, ${i})" 
+                  class="option-btn-${q.id} btn-fun p-4 bg-gradient-to-r from-gray-100 to-gray-200 hover:from-purple-100 hover:to-pink-100 rounded-2xl text-lg font-bold text-gray-700 border-2 border-transparent hover:border-purple-300 transition-all">
+                  ${opt}
+                </button>
+              `,
+                )
+                .join("")}
+            </div>
+            
+            <div id="feedback-${q.id}" class="hidden mt-4 p-4 rounded-2xl text-center"></div>
+          </div>
+        `;
+          container.innerHTML += questionHTML;
+        });
+      }
+
+      // Check answer
+      function checkAnswer(questionId, selectedIndex) {
+        if (answeredQuestions.has(questionId)) return;
+
+        const question = questions.find((q) => q.id === questionId);
+        const isCorrect = selectedIndex === question.correct;
+        const buttons = document.querySelectorAll(`.option-btn-${questionId}`);
+        const feedback = document.getElementById(`feedback-${questionId}`);
+
+        answeredQuestions.add(questionId);
+
+        buttons.forEach((btn, i) => {
+          btn.disabled = true;
+          btn.classList.remove(
+            "hover:from-purple-100",
+            "hover:to-pink-100",
+            "hover:border-purple-300",
+          );
+
+          if (i === question.correct) {
+            btn.classList.remove("from-gray-100", "to-gray-200");
+            btn.classList.add(
+              "from-green-400",
+              "to-emerald-400",
+              "text-white",
+              "correct-animation",
+            );
+          } else if (i === selectedIndex && !isCorrect) {
+            btn.classList.remove("from-gray-100", "to-gray-200");
+            btn.classList.add(
+              "from-red-400",
+              "to-rose-400",
+              "text-white",
+              "wrong-animation",
+            );
+          }
+        });
+
+        if (isCorrect) {
+          correctAnswers++;
+          feedback.innerHTML = `
+          <div class="text-green-600">
+            <span class="text-4xl">🎉</span>
+            <p class="text-xl font-black mt-2">Benar! Kamu hebat!</p>
+          </div>
+        `;
+          feedback.classList.remove("hidden", "bg-red-100");
+          feedback.classList.add("bg-green-100");
+        } else {
+          wrongAnswers++;
+          feedback.innerHTML = `
+          <div class="text-red-600">
+            <span class="text-4xl">😊</span>
+            <p class="text-xl font-black mt-2">Belum tepat, jawaban yang benar: ${question.options[question.correct]}</p>
+          </div>
+        `;
+          feedback.classList.remove("hidden", "bg-green-100");
+          feedback.classList.add("bg-red-100");
+        }
+
+        updateProgress();
+        updateScore();
+      }
+
+      // Update progress bar
+      function updateProgress() {
+        const progress = (answeredQuestions.size / questions.length) * 100;
+        document.getElementById("progress-bar").style.width = `${progress}%`;
+        document.getElementById("progress-text").textContent =
+          `${answeredQuestions.size}/${questions.length} soal`;
+      }
+
+      // Update score display
+      function updateScore() {
+        document.getElementById("correct-count").textContent = correctAnswers;
+        document.getElementById("wrong-count").textContent = wrongAnswers;
+
+        const score =
+          answeredQuestions.size > 0
+            ? Math.round((correctAnswers / answeredQuestions.size) * 100)
+            : 0;
+        document.getElementById("score-display").textContent = `${score}%`;
+
+        // Show achievement when all questions answered
+        if (answeredQuestions.size === questions.length) {
+          const achievement = document.getElementById("achievement");
+          const achievementEmoji = document.getElementById("achievement-emoji");
+          const achievementText = document.getElementById("achievement-text");
+
+          achievement.classList.remove("hidden");
+
+          if (score >= 90) {
+            achievementEmoji.textContent = "🏆";
+            achievementText.textContent = "LUAR BIASA! Kamu Juara Pecahan!";
+          } else if (score >= 70) {
+            achievementEmoji.textContent = "🌟";
+            achievementText.textContent = "Hebat! Kamu sudah paham pecahan!";
+          } else if (score >= 50) {
+            achievementEmoji.textContent = "💪";
+            achievementText.textContent = "Bagus! Terus berlatih ya!";
+          } else {
+            achievementEmoji.textContent = "📚";
+            achievementText.textContent = "Semangat! Ayo belajar lagi!";
+          }
+        }
+      }
+
+      // Reset quiz
+      function resetQuiz() {
+        answeredQuestions.clear();
+        correctAnswers = 0;
+        wrongAnswers = 0;
+        document.getElementById("achievement").classList.add("hidden");
+        renderQuestions();
+        updateProgress();
+        updateScore();
+        scrollToSection("soal");
+      }
+
+      // Scroll to section
+      function scrollToSection(sectionId) {
+        document
+          .getElementById(sectionId)
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      // Apply config to UI
+      function applyConfig(config) {
+        const mainTitle = document.getElementById("main-title");
+        const subtitle = document.getElementById("subtitle");
+        const navTitle = document.getElementById("nav-title");
+
+        if (mainTitle)
+          mainTitle.textContent = config.main_title || defaultConfig.main_title;
+        if (subtitle)
+          subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+        if (navTitle)
+          navTitle.textContent = config.main_title || defaultConfig.main_title;
+      }
+
+      // Initialize SDK
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig: defaultConfig,
+          onConfigChange: async (config) => {
+            applyConfig(config);
+          },
+          mapToCapabilities: (config) => ({
+            recolorables: [
+              {
+                get: () =>
+                  config.background_color || defaultConfig.background_color,
+                set: (value) =>
+                  window.elementSdk.setConfig({ background_color: value }),
+              },
+              {
+                get: () => config.card_color || defaultConfig.card_color,
+                set: (value) =>
+                  window.elementSdk.setConfig({ card_color: value }),
+              },
+              {
+                get: () => config.text_color || defaultConfig.text_color,
+                set: (value) =>
+                  window.elementSdk.setConfig({ text_color: value }),
+              },
+              {
+                get: () =>
+                  config.primary_action || defaultConfig.primary_action,
+                set: (value) =>
+                  window.elementSdk.setConfig({ primary_action: value }),
+              },
+              {
+                get: () =>
+                  config.secondary_action || defaultConfig.secondary_action,
+                set: (value) =>
+                  window.elementSdk.setConfig({ secondary_action: value }),
+              },
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined,
+          }),
+          mapToEditPanelValues: (config) =>
+            new Map([
+              ["main_title", config.main_title || defaultConfig.main_title],
+              ["subtitle", config.subtitle || defaultConfig.subtitle],
+            ]),
+        });
+      }
+
+      // Initialize on load
+      renderQuestions();
+      updateProgress();
+    </script>
+    <script>
+      (function () {
+        function c() {
+          var b = a.contentDocument || a.contentWindow.document;
+          if (b) {
+            var d = b.createElement("script");
+            d.innerHTML =
+              "window.__CF$cv$params={r:'9d1521342023fce3',t:'MTc3MTY2NTIyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+            b.getElementsByTagName("head")[0].appendChild(d);
+          }
+        }
+        if (document.body) {
+          var a = document.createElement("iframe");
+          a.height = 1;
+          a.width = 1;
+          a.style.position = "absolute";
+          a.style.top = 0;
+          a.style.left = 0;
+          a.style.border = "none";
+          a.style.visibility = "hidden";
+          document.body.appendChild(a);
+          if ("loading" !== document.readyState) c();
+          else if (window.addEventListener)
+            document.addEventListener("DOMContentLoaded", c);
+          else {
+            var e = document.onreadystatechange || function () {};
+            document.onreadystatechange = function (b) {
+              e(b);
+              "loading" !== document.readyState &&
+                ((document.onreadystatechange = e), c());
+            };
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>
